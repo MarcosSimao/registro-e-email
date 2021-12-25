@@ -21,8 +21,8 @@ public class AppUser  {
     private String password;
     @Enumerated(EnumType.STRING)
     private AppUserRole appUserRole;
-    private boolean locked;
-    private boolean enabled;
+    private boolean locked=false;
+    private boolean enabled=false;
 
     public AppUser(AppUser user){
         this.id=user.getId();

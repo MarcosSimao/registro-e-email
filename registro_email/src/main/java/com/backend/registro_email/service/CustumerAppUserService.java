@@ -2,6 +2,7 @@ package com.backend.registro_email.service;
 
 import com.backend.registro_email.model.AppUser;
 import com.backend.registro_email.model.CustomAppUserDetails;
+import com.backend.registro_email.model.token.ConfirmationToken;
 import com.backend.registro_email.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,13 +11,16 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class CustumerAppUserService implements UserDetailsService {
     private final StudentRepository studentRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final ConfirmatinTokenService confirmatinTokenService;
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Optional<AppUser> optionalAppUser = Optional.ofNullable(studentRepository.findByEmail(email).orElseThrow(() ->
@@ -30,6 +34,14 @@ public class CustumerAppUserService implements UserDetailsService {
         }
         appUser.setPassword(bCryptPasswordEncoder.encode(appUser.getPassword()));
         studentRepository.save(appUser);
-        return "cadastrado";
+        String token= UUID.randomUUID().toString();
+        ConfirmationToken confirmationToken= new ConfirmationToken(
+              token,
+              LocalDateTime.now(),
+              LocalDateTime.now().plusMinutes(15),
+                appUser
+        );
+        confirmatinTokenService.save(confirmationToken);
+        return token;
     }
 }
