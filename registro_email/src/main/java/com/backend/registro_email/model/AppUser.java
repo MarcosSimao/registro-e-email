@@ -15,8 +15,8 @@ public class AppUser  {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "student_sequence")
     private  Long id;
-    private String name;
-    private String username;
+    private String fistName;
+    private String lastName;
     private String email;
     private String password;
     @Enumerated(EnumType.STRING)
@@ -26,18 +26,25 @@ public class AppUser  {
 
     public AppUser(AppUser user){
         this.id=user.getId();
-        this.name=user.getName();
-        this.username=user.getUsername();
+        this.fistName=user.getFistName();
+        this.lastName=user.getLastName();
         this.email=user.getEmail();
         this.password=user.getPassword();
         this.appUserRole=user.getAppUserRole();
         this.locked=user.isLocked();
         this.enabled=user.isEnabled();
     }
+   public AppUser(String fistname, String lastName, String email,String passowrd,AppUserRole role){
+        this.fistName=fistname;
+        this.lastName=lastName;
+        this.email=email;
+        this.password=passowrd;
+        this.appUserRole=role;
 
-    public AppUser(String name, String username, String email, String password, AppUserRole appUserRole, boolean locked, boolean enabled) {
-        this.name = name;
-        this.username = username;
+   }
+    public AppUser(String fistName, String lastName, String email, String password, AppUserRole appUserRole, boolean locked, boolean enabled) {
+        this.fistName = fistName;
+        this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.appUserRole = appUserRole;

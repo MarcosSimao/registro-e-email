@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -15,10 +16,20 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CustumerAppUserService implements UserDetailsService {
     private final StudentRepository studentRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Optional<AppUser> optionalAppUser = Optional.ofNullable(studentRepository.findByEmail(email).orElseThrow(() ->
                 new UsernameNotFoundException("email nao encontrado")));
         return optionalAppUser.map(CustomAppUserDetails::new).get();
+    }
+
+    public String signUpUser(AppUser appUser){
+        if(studentRepository.findByEmail(appUser.getEmail()).isPresent()){
+           throw new IllegalStateException("email já cadastrado");
+        }
+        appUser.setPassword(bCryptPasswordEncoder.encode(appUser.getPassword()));
+        studentRepository.save(appUser);
+        return "cadastrado";
     }
 }

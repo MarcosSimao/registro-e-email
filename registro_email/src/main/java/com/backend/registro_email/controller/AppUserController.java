@@ -14,7 +14,7 @@ public class AppUserController {
     private final RegistroService registroService;
 
     @PostMapping
-    public String register(@RequestBody RegistroRequest registroRequest){
-        return registroService.registro(registroRequest);
+    public ResponseEntity<String> register(@RequestBody RegistroRequest registroRequest){
+        return ResponseEntity.ok(registroService.registro(registroRequest));
     }
 }

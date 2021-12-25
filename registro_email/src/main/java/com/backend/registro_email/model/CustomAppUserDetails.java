@@ -25,7 +25,7 @@ public class CustomAppUserDetails extends AppUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return super.getUsername();
+        return super.getEmail();
     }
 
     @Override
