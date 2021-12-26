@@ -44,4 +44,8 @@ public class CustumerAppUserService implements UserDetailsService {
         confirmatinTokenService.save(confirmationToken);
         return token;
     }
+    public int enabledAppUser(String email){
+        return studentRepository.enableAppUser(email);
+    }
+
 }
