@@ -8,27 +8,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
-@RequiredArgsConstructor
+@EnableAsync
 public class RegistroEmailApplication {
-	private final StudentRepository studentRepository;
-	private  final CustumerAppUserService custumerAppUserService;
+
 	public static void main(String[] args) {
 		SpringApplication.run(RegistroEmailApplication.class, args);
 	}
-//	@Bean
-//	public void init(){
-//		AppUser app = new AppUser();
-//		app.setEmail("leti@teste");
-//		app.setUsername("leti");
-//		app.setAppUserRole(AppUserRole.ADMIN);
-//		app.setEnabled(true);
-//		app.setLocked(true);
-//		app.setName("leti");
-//		app.setPassword("123456");
-//		studentRepository.save(app);
-//	}
 
 
 

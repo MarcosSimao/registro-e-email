@@ -14,7 +14,7 @@ public class AppUserController {
 
     @PostMapping
     public ResponseEntity<String> register(@RequestBody RegistroRequest registroRequest){
-        return ResponseEntity.ok(registroService.registro(registroRequest));
+        return  ResponseEntity.ok(registroService.registro(registroRequest));
     }
    @GetMapping("confirm")
    public ResponseEntity<String>confirm(@RequestParam("token") String token){
